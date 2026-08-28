@@ -2,194 +2,193 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diplomatic English Mastery - Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DiplomatPrep">
+    <meta name="theme-color" content="#0b0f19">
+
+    <title>Diplomatic English Prep</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Sarabun', sans-serif; }
-        .font-serif-title { font-family: 'Merriweather', serif; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Sarabun', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        /* Safe Area Padding for iPhones */
+        .pt-safe { padding-top: env(safe-area-inset-top); }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .active-scale:active { transform: scale(0.97); transition: transform 0.1s ease; }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen">
+<body class="bg-[#0b0f19] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-950">
 
-    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <span class="text-2xl">🌐</span>
+    <header class="sticky top-0 z-50 bg-[#0f172a]/80 ios-blur border-b border-slate-800/80 pt-safe">
+        <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-slate-950 font-bold text-sm shadow-md shadow-amber-500/20">
+                    🏛️
+                </div>
                 <div>
-                    <h1 class="font-serif-title font-bold text-lg text-amber-400">Diplomatic English Prep</h1>
-                    <p class="text-xs text-slate-400">ระบบเตรียมสอบนักการทูตปฏิบัติการ (Interactive Training Platform)</p>
+                    <h1 class="text-sm font-bold tracking-tight text-white leading-none">Diplomatic Prep</h1>
+                    <span id="current-date" class="text-[10px] text-slate-400 font-medium leading-tight"></span>
                 </div>
             </div>
-            <div class="text-right">
-                <span id="current-date" class="text-xs bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-slate-300"></span>
+            <div class="flex items-center space-x-1">
+                <span class="text-[10px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/20">MFA Goal</span>
+            </div>
+        </div>
+        
+        <div class="max-w-md mx-auto px-4 pb-2">
+            <div class="bg-slate-900/90 p-1 rounded-xl flex border border-slate-800">
+                <button onclick="switchTab('quiz')" id="tab-quiz" class="flex-1 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 shadow-sm transition-all">1. ข้อสอบ</button>
+                <button onclick="switchTab('vocab')" id="tab-vocab" class="flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all">2. คลังศัพท์</button>
+                <button onclick="switchTab('daily')" id="tab-daily" class="flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all">3. ฝึกสรุป</button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+    <main class="flex-1 max-w-md w-full mx-auto px-4 py-4 space-y-4 pb-20">
 
-        <div class="flex border-b border-slate-800 space-x-4">
-            <button onclick="switchTab('quiz')" id="tab-quiz" class="py-2 px-4 border-b-2 border-amber-400 font-semibold text-amber-400">1. ข้อสอบจำลอง & เฉลยละเอียด</button>
-            <button onclick="switchTab('vocab')" id="tab-vocab" class="py-2 px-4 border-b-2 border-transparent text-slate-400 hover:text-slate-200">2. คลังศัพท์ & สำนวนพร้อมเสียงอ่าน</button>
-            <button onclick="switchTab('daily')" id="tab-daily" class="py-2 px-4 border-b-2 border-transparent text-slate-400 hover:text-slate-200">3. ข้อสอบเขียนสรุปข่าว & ข้อมูล</button>
-        </div>
-
-        <section id="section-quiz" class="space-y-6">
-            <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded">Diplomatic Syntax & Grammar Drill</span>
-                    <span id="quiz-progress" class="text-xs text-slate-400">ข้อ 1 จาก 3</span>
+        <section id="section-quiz" class="space-y-4">
+            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 shadow-lg backdrop-blur-sm space-y-4">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-amber-400 flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Diplomatic Syntax
+                    </span>
+                    <span id="quiz-progress" class="text-slate-500 font-mono text-[11px]">1/3</span>
                 </div>
                 
-                <div class="space-y-3 mb-6">
-                    <h3 id="question-text" class="text-lg font-medium text-slate-100 leading-relaxed"></h3>
+                <p id="question-text" class="text-sm font-medium leading-relaxed text-slate-100"></p>
+                
+                <div id="quiz-assist-tools" class="hidden grid grid-cols-2 gap-2 pt-1">
+                    <button onclick="speakText(questions[currentQ].q)" class="active-scale flex items-center justify-center space-x-1 bg-slate-800 border border-slate-700 hover:bg-slate-700 py-2 rounded-xl text-xs font-medium text-amber-300">
+                        <span>🔊 ฟังเสียงโจทย์</span>
+                    </button>
+                    <button onclick="toggleTranslation()" class="active-scale flex items-center justify-center space-x-1 bg-slate-800 border border-slate-700 hover:bg-slate-700 py-2 rounded-xl text-xs font-medium text-slate-200">
+                        <span>🇹🇭 แปลไทย</span>
+                    </button>
+                    <div id="quiz-translation-text" class="hidden col-span-2 text-xs text-amber-200/90 bg-amber-950/20 border border-amber-900/40 p-3 rounded-xl leading-relaxed"></div>
+                </div>
+
+                <div id="options-container" class="space-y-2.5 pt-1">
+                    </div>
+
+                <div id="explanation-box" class="hidden p-3.5 rounded-xl border text-xs leading-relaxed space-y-3">
+                    <h4 id="explanation-title" class="font-bold text-sm"></h4>
+                    <p id="explanation-text" class="text-slate-300"></p>
+                    <button onclick="nextQuestion()" class="active-scale w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl transition">
+                        ข้อถัดไป ➔
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-vocab" class="hidden space-y-3">
+            <div class="relative">
+                <input type="text" id="vocab-search" oninput="filterVocab()" placeholder="🔍 ค้นหาคำศัพท์ / คำอ่าน..." class="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400">
+            </div>
+            
+            <div id="vocab-grid" class="space-y-3">
+                </div>
+        </section>
+
+        <section id="section-daily" class="hidden space-y-4">
+            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 shadow-lg space-y-3.5">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wide">Daily Policy Precis</h3>
+                    <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full">80–120 คำ</span>
+                </div>
+
+                <div class="bg-[#0b0f19] p-3 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
+                    <span class="font-bold text-slate-300">โครงสร้างบังคับ 3 ส่วน:</span>
+                    <p>1. แก่นประเด็นขัดแย้ง 2. ท่าทีการตอบโต้ 3. ผลกระทบภูมิรัฐศาสตร์</p>
+                </div>
+
+                <div class="bg-[#0b0f19] p-3.5 rounded-xl border border-slate-800 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] uppercase font-bold text-slate-500">บทความต้นฉบับ:</span>
+                        <button onclick="speakText(document.getElementById('news-source').innerText)" class="text-[11px] text-amber-400 hover:underline flex items-center gap-1">
+                            🔊 ฟังเสียง
+                        </button>
+                    </div>
+                    <p id="news-source" class="text-xs text-slate-300 font-serif leading-relaxed italic">
+                        "Amid escalating tensions in the South China Sea, maritime skirmishes have intensified over disputed shoals. Multiple regional states have expressed severe concern over coercive maneuvers that undermine the freedom of navigation. While international arbitration ruled against sweeping territorial assertions, claimant states continue fortifying outposts. The multilateral bloc has repeatedly called for an expedited, legally binding Code of Conduct (COC) to de-escalate friction and uphold international maritime law as stipulated by UNCLOS."
+                    </p>
+                </div>
+
+                <div class="space-y-2">
+                    <textarea id="essay-input" rows="4" placeholder="พิมพ์บทสรุปนโยบายที่นี่..." class="w-full bg-[#0b0f19] border border-slate-800 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-400"></textarea>
                     
-                    <div id="quiz-assist-tools" class="hidden flex flex-wrap gap-2 pt-2">
-                        <button onclick="speakText(questions[currentQ].q)" class="inline-flex items-center space-x-1.5 text-xs bg-slate-700 hover:bg-slate-600 text-amber-300 px-3 py-1.5 rounded transition">
-                            <span>🔊 ฟังเสียงโจทย์</span>
+                    <div class="flex justify-between items-center">
+                        <span id="word-count" class="text-[11px] font-mono text-slate-500">0 คำ (เป้าหมาย: 80-120)</span>
+                        <button onclick="saveDraft()" class="active-scale bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-700 font-medium">
+                            💾 บันทึก
                         </button>
-                        <button onclick="toggleTranslation()" class="inline-flex items-center space-x-1.5 text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-1.5 rounded transition">
-                            <span>🇹🇭 แปลโจทย์เป็นภาษาไทย</span>
-                        </button>
-                        <div id="quiz-translation-text" class="hidden w-full text-xs text-amber-200/90 bg-slate-900/80 p-2.5 rounded border border-slate-700 mt-2"></div>
                     </div>
-                </div>
-                
-                <div id="options-container" class="space-y-3">
-                    </div>
-
-                <div id="explanation-box" class="hidden mt-6 p-4 rounded-lg border">
-                    <h4 id="explanation-title" class="font-bold text-sm mb-1"></h4>
-                    <p id="explanation-text" class="text-sm leading-relaxed"></p>
-                    <button onclick="nextQuestion()" class="mt-4 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4 py-2 rounded text-sm transition">ข้อถัดไป ➔</button>
                 </div>
             </div>
-        </section>
 
-        <section id="section-vocab" class="hidden space-y-4">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-100">Diplomatic Vocabulary & Pronunciation</h2>
-                    <p class="text-xs text-slate-400">คำศัพท์เฉพาะทาง คำอ่านออกเสียง และตัวอย่างประโยคในบริบทการทูตจริง</p>
-                </div>
-                <input type="text" id="vocab-search" oninput="filterVocab()" placeholder="ค้นหาคำศัพท์ / คำแปล..." class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-            </div>
-            <div id="vocab-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                </div>
-        </section>
-
-        <section id="section-daily" class="hidden space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                <div class="md:col-span-2 bg-slate-800/60 border border-slate-700 rounded-xl p-6 space-y-5">
-                    <div class="flex justify-between items-baseline border-b border-slate-700 pb-3">
-                        <h3 class="text-lg font-bold text-amber-400">📝 แบบฝึกหัดสรุปข่าวเชิงนโยบาย (Diplomatic Precis Task)</h3>
-                        <span class="text-xs text-rose-400 font-semibold bg-rose-950/40 px-2 py-0.5 rounded border border-rose-800">โจทย์ข้อสอบจริง</span>
-                    </div>
-
-                    <div class="bg-slate-900/90 p-4 rounded-lg border border-slate-700 space-y-3 text-xs leading-relaxed text-slate-300">
-                        <p class="font-bold text-amber-300 text-sm">🎯 ข้อกำหนดและคำสั่งในการเขียน (Mandatory Instructions):</p>
-                        <ul class="list-disc list-inside space-y-1 text-slate-300">
-                            <li><b class="text-slate-100">เป้าหมาย:</b> สรุปบทความข่าวข้างล่างนี้ให้เหลือความยาว <span class="text-amber-400 font-bold">80–120 คำ</span></li>
-                            <li><b class="text-slate-100">โครงสร้างบังคับ 3 องค์ประกอบ:</b>
-                                <ol class="list-decimal list-inside ml-4 text-slate-400">
-                                    <li><b>Core Geopolitical Issue:</b> ประเด็นขัดแย้ง/ข้อพิพาทหลักคืออะไร</li>
-                                    <li><b>State Actions & Diplomatic Posture:</b> ท่าทีและการตอบโต้ของแต่ละฝ่าย</li>
-                                    <li><b>Strategic Implications:</b> ผลกระทบต่อเสถียรภาพระดับภูมิภาคหรือโลก</li>
-                                </ol>
-                            </li>
-                            <li><b class="text-slate-100">ระดับภาษา:</b> ต้องใช้สำนวนทางการ (Diplomatic Tone) และห้ามคัดลอกประโยคเดิม (Paraphrase only)</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">บทความต้นฉบับ (Source Text):</span>
-                            <button onclick="speakText(document.getElementById('news-source').innerText)" class="text-xs text-amber-400 hover:underline">🔊 ฟังเสียงบทความ</button>
-                        </div>
-                        <p id="news-source" class="text-xs text-slate-300 leading-relaxed font-serif">
-                            "Amid escalating tensions in the South China Sea, maritime skirmishes have intensified over disputed shoals. Multiple regional states have expressed severe concern over coercive maneuvers that undermine the freedom of navigation. While international arbitration ruled against sweeping territorial assertions, claimant states continue fortifying outposts. The multilateral bloc has repeatedly called for an expedited, legally binding Code of Conduct (COC) to de-escalate friction and uphold international maritime law as stipulated by UNCLOS."
-                        </p>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-2">พื้นที่เขียนคำตอบสรุปเชิงนโยบาย (Precis Draft):</label>
-                        <textarea id="essay-input" rows="5" placeholder="Draft your concise summary here following the 3 mandatory elements..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400 font-sans"></textarea>
-                        <div class="flex justify-between items-center mt-2">
-                            <span id="word-count" class="text-xs font-mono text-slate-400">จำนวนคำ: 0 คำ (เป้าหมาย: 80-120 คำ)</span>
-                            <button onclick="saveDraft()" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded text-slate-200 transition">💾 บันทึกแบบร่าง</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-6 space-y-4">
-                    <h3 class="text-lg font-bold text-slate-100">📡 แหล่งข่าวสารรายวัน</h3>
-                    <p class="text-xs text-slate-400">แหล่งข้อมูลภาษาอังกฤษทางการ สำหรับฝึกทักษะการอ่านวิเคราะห์ทุกวันโดยไม่มีค่าใช้จ่าย:</p>
-                    <ul class="space-y-3 text-sm">
-                        <li>
-                            <a href="https://news.un.org/en/" target="_blank" class="block p-2.5 rounded bg-slate-900/60 hover:bg-slate-700/50 border border-slate-700 transition">
-                                <span class="font-semibold text-amber-400">UN News Official</span>
-                                <p class="text-xs text-slate-400">ถ้อยแถลงและการประชุมของสหประชาชาติ</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.mfa.go.th" target="_blank" class="block p-2.5 rounded bg-slate-900/60 hover:bg-slate-700/50 border border-slate-700 transition">
-                                <span class="font-semibold text-amber-400">MFA Thailand Press Releases</span>
-                                <p class="text-xs text-slate-400">ข่าวสารทางการทูตและแถลงการณ์ไทย</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.youtube.com/@CaspianReport" target="_blank" class="block p-2.5 rounded bg-slate-900/60 hover:bg-slate-700/50 border border-slate-700 transition">
-                                <span class="font-semibold text-amber-400">CaspianReport (YouTube)</span>
-                                <p class="text-xs text-slate-400">วิเคราะห์ภูมิรัฐศาสตร์เชิงลึก</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="grid grid-cols-2 gap-2">
+                <a href="https://news.un.org/en/" target="_blank" class="p-3 bg-slate-900/50 border border-slate-800 rounded-xl text-center active-scale">
+                    <span class="text-xs font-bold text-amber-400 block">UN News</span>
+                    <span class="text-[10px] text-slate-500">ข่าวสารทางการ</span>
+                </a>
+                <a href="https://www.youtube.com/@CaspianReport" target="_blank" class="p-3 bg-slate-900/50 border border-slate-800 rounded-xl text-center active-scale">
+                    <span class="text-xs font-bold text-amber-400 block">CaspianReport</span>
+                    <span class="text-[10px] text-slate-500">วิเคราะห์ Geopolitics</span>
+                </a>
             </div>
         </section>
 
     </main>
 
+    <div class="pb-safe"></div>
+
     <script>
-        // Set Current Date
+        // Set Date
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('th-TH', { 
-            year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' 
+            month: 'short', day: 'numeric', weekday: 'short' 
         });
 
-        // Text-to-Speech API
+        // Speech API
         function speakText(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Stop ongoing speech
+                window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
-                utterance.rate = 0.9; // Slightly slower for clear diplomatic pronunciation
+                utterance.rate = 0.88;
                 window.speechSynthesis.speak(utterance);
-            } else {
-                alert("อุปกรณ์ของคุณไม่รองรับ Web Speech API");
             }
         }
 
-        // Tabs Handler
+        // Tab Switcher
         function switchTab(tab) {
             ['quiz', 'vocab', 'daily'].forEach(t => {
                 document.getElementById(`section-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).className = 'py-2 px-4 border-b-2 border-transparent text-slate-400 hover:text-slate-200';
+                document.getElementById(`tab-${t}`).className = 'flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all';
             });
             document.getElementById(`section-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).className = 'py-2 px-4 border-b-2 border-amber-400 font-semibold text-amber-400';
+            document.getElementById(`tab-${tab}`).className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 shadow-sm transition-all';
         }
 
-        // Quiz Data
+        // Quiz Logic
         const questions = [
             {
                 q: "The treaty was deemed invalid because the delegation had acted without prior ________ from the sovereign state.",
                 translation: "สนธิสัญญาดังกล่าวถูกพิจารณาว่าเป็นโมฆะ เนื่องจากคณะผู้แทนได้ดำเนินการโดยปราศจาก 'การให้สัตยาบัน/การอนุมัติรับรอง' ล่วงหน้าจากรัฐอธิปไตย",
                 options: ["jurisdiction", "ratification", "deterrence", "bilateralism"],
                 answer: 1,
-                reason: "<b>Ratification</b> (/ˌræt.ɪ.fɪˈkeɪ.ʃən/) คือ 'การให้สัตยาบัน' ซึ่งเป็นขั้นตอนทางกฎหมายระหว่างประเทศที่รัฐให้ความเห็นชอบข้อตกลงอย่างเป็นทางการ<br>• <i>Jurisdiction</i> = เขตอำนาจศาล<br>• <i>Deterrence</i> = การป้องปรามยับยั้ง<br>• <i>Bilateralism</i> = ทวิภาคีนิยม"
+                reason: "<b>Ratification</b> (/ˌræt.ɪ.fɪˈkeɪ.ʃən/) หมายถึง การให้สัตยาบันอย่างเป็นทางการต่อสนธิสัญญา"
             },
             {
                 q: "Rarely ________ such vehement opposition during multilateral negotiations.",
@@ -201,14 +200,14 @@
                     "the delegation has encountered"
                 ],
                 answer: 1,
-                reason: "ข้อนี้ทดสอบเรื่อง <b>Negative Inversion</b> เมื่อนำคำเชิงปฏิเสธ เช่น <i>Rarely, Seldom, Scarcely</i> มาขึ้นต้นประโยค จะต้องสลับกริยาช่วย (Auxiliary Verb: had) มาไว้หน้าประธาน (the delegation)"
+                reason: "<b>Negative Inversion</b>: คำว่า <i>Rarely</i> นำหน้า ต้องสลับกริยาช่วย (had) มาไว้หน้าประธาน"
             },
             {
                 q: "Both nations issued a joint communique reaffirming their commitment to upholding territorial ________.",
                 translation: "ทั้งสองประเทศได้ออกแถลงการณ์ร่วมเพื่อยืนยันพันธกรณีในการธำรงไว้ซึ่ง 'บูรณภาพแห่งดินแดน'",
                 options: ["impasse", "integrity", "hegemony", "annexation"],
                 answer: 1,
-                reason: "<b>Territorial integrity</b> (/ˌter.ɪˈtɔː.ri.əl ɪnˈteɡ.rə.ti/) หมายถึง 'บูรณภาพแห่งดินแดน' เป็น Collocation สำคัญตามกฎบัตรสหประชาชาติ (UN Charter ข้อ 2(4))"
+                reason: "<b>Territorial integrity</b> = บูรณภาพแห่งดินแดน ตามกฎบัตรสหประชาชาติ"
             }
         ];
 
@@ -216,11 +215,9 @@
 
         function loadQuestion() {
             const q = questions[currentQ];
-            document.getElementById('quiz-progress').innerText = `ข้อ ${currentQ + 1} จาก ${questions.length}`;
+            document.getElementById('quiz-progress').innerText = `${currentQ + 1}/${questions.length}`;
             document.getElementById('question-text').innerText = q.q;
             document.getElementById('explanation-box').classList.add('hidden');
-            
-            // Hide helper tools until an option is picked
             document.getElementById('quiz-assist-tools').classList.add('hidden');
             document.getElementById('quiz-translation-text').classList.add('hidden');
 
@@ -229,7 +226,7 @@
 
             q.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
-                btn.className = 'w-full text-left p-3.5 rounded-lg border border-slate-700 bg-slate-900/50 hover:bg-slate-700/50 transition text-sm flex items-center justify-between';
+                btn.className = 'active-scale w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-800/60 transition text-xs flex items-center justify-between text-slate-200';
                 btn.innerHTML = `<span>${opt}</span>`;
                 btn.onclick = () => selectOption(idx, btn);
                 container.appendChild(btn);
@@ -243,22 +240,20 @@
             const expTitle = document.getElementById('explanation-title');
             const expText = document.getElementById('explanation-text');
 
-            // Disable all options
             const allBtns = document.getElementById('options-container').getElementsByTagName('button');
             for (let b of allBtns) b.disabled = true;
 
-            // Reveal translation & speech tools only after answer
             document.getElementById('quiz-assist-tools').classList.remove('hidden');
 
             if (isCorrect) {
-                btnElement.classList.add('border-emerald-500', 'bg-emerald-950/30', 'text-emerald-300');
-                expBox.className = 'mt-6 p-4 rounded-lg border border-emerald-800 bg-emerald-950/30 text-slate-200';
+                btnElement.classList.add('border-emerald-500', 'bg-emerald-950/40', 'text-emerald-300');
+                expBox.className = 'p-3.5 rounded-xl border border-emerald-800/80 bg-emerald-950/30 text-slate-200 text-xs leading-relaxed space-y-2';
                 expTitle.innerHTML = '✅ ถูกต้อง (Correct)';
             } else {
-                btnElement.classList.add('border-rose-500', 'bg-rose-950/30', 'text-rose-300');
-                allBtns[q.answer].classList.add('border-emerald-500', 'bg-emerald-950/30', 'text-emerald-300');
-                expBox.className = 'mt-6 p-4 rounded-lg border border-rose-800 bg-rose-950/30 text-slate-200';
-                expTitle.innerHTML = '❌ ยังไม่ถูกต้อง (Incorrect)';
+                btnElement.classList.add('border-rose-500', 'bg-rose-950/40', 'text-rose-300');
+                allBtns[q.answer].classList.add('border-emerald-500', 'bg-emerald-950/40', 'text-emerald-300');
+                expBox.className = 'p-3.5 rounded-xl border border-rose-800/80 bg-rose-950/30 text-slate-200 text-xs leading-relaxed space-y-2';
+                expTitle.innerHTML = '❌ ยังไม่ถูกต้อง';
             }
 
             expText.innerHTML = q.reason;
@@ -267,12 +262,8 @@
 
         function toggleTranslation() {
             const box = document.getElementById('quiz-translation-text');
-            if (box.classList.contains('hidden')) {
-                box.innerText = questions[currentQ].translation;
-                box.classList.remove('hidden');
-            } else {
-                box.classList.add('hidden');
-            }
+            box.classList.toggle('hidden');
+            box.innerText = questions[currentQ].translation;
         }
 
         function nextQuestion() {
@@ -280,56 +271,12 @@
             loadQuestion();
         }
 
-        // Vocabulary Vault Data with Phonetics & Audio
+        // Vocab Data
         const vocabList = [
-            { 
-                word: "Rapprochement", 
-                phonetic: "/ræpˈrɒʃ.mɒ̃/", 
-                thai_read: "แร็พ-รอช-ม็อง", 
-                pos: "n.", 
-                meaning: "การฟื้นฟูความสัมพันธ์ฉันมิตรระหว่างประเทศ", 
-                context: "The historic summit paved the way for a rapprochement between the two states." 
-            },
-            { 
-                word: "Demarche", 
-                phonetic: "/deɪˈmɑːʃ/", 
-                thai_read: "เดย์-มาร์ช", 
-                pos: "n.", 
-                meaning: "การยื่นแถลงการณ์ประท้วงหรือแสดงท่าทีทางการทูต", 
-                context: "The ministry issued a formal diplomatic demarche to voice deep concern." 
-            },
-            { 
-                word: "Sovereignty", 
-                phonetic: "/ˈsɒv.rɪn.ti/", 
-                thai_read: "ซ็อฝ-ริน-ทิ", 
-                pos: "n.", 
-                meaning: "อธิปไตย / อำนาจสูงสุดในการปกครองตนเอง", 
-                context: "All nations must respect the sovereignty and territorial integrity of others." 
-            },
-            { 
-                word: "Impasse", 
-                phonetic: "/ˈæm.pɑːs/", 
-                thai_read: "แอม-พาส (หรือ อิม-แพส)", 
-                pos: "n.", 
-                meaning: "ภาวะชะงักงัน / ทางตันในการเจรจา", 
-                context: "Envoys held intensive discussions to overcome the diplomatic impasse." 
-            },
-            { 
-                word: "Communique", 
-                phonetic: "/kəˈmjuː.nɪ.keɪ/", 
-                thai_read: "เคอะ-มยู-นิ-เคย์", 
-                pos: "n.", 
-                meaning: "แถลงการณ์ร่วมอย่างเป็นทางการ", 
-                context: "The final joint communique highlighted mutual commitments to sustainability." 
-            },
-            { 
-                word: "Extradition", 
-                phonetic: "/ˌek.strəˈdɪʃ.ən/", 
-                thai_read: "เอ็ก-ซตร้า-ดิช-เชิน", 
-                pos: "n.", 
-                meaning: "การส่งผู้ร้ายข้ามแดน", 
-                context: "Both states signed an extradition treaty to combat transnational crime." 
-            }
+            { word: "Rapprochement", phonetic: "/ræpˈrɒʃ.mɒ̃/", thai_read: "แร็พ-รอช-ม็อง", pos: "n.", meaning: "การฟื้นฟูความสัมพันธ์ฉันมิตร", context: "The summit paved the way for a historic rapprochement." },
+            { word: "Demarche", phonetic: "/deɪˈmɑːʃ/", thai_read: "เดย์-มาร์ช", pos: "n.", meaning: "การยื่นแถลงประท้วงทางการทูต", context: "The ministry issued a formal diplomatic demarche." },
+            { word: "Sovereignty", phonetic: "/ˈsɒv.rɪn.ti/", thai_read: "ซ็อฝ-ริน-ทิ", pos: "n.", meaning: "อธิปไตยของรัฐ", context: "All nations must respect state sovereignty." },
+            { word: "Impasse", phonetic: "/ˈæm.pɑːs/", thai_read: "แอม-พาส", pos: "n.", meaning: "ทางตัน / ภาวะชะงักงัน", context: "Envoys worked to resolve the negotiation impasse." }
         ];
 
         function renderVocab(list) {
@@ -337,28 +284,22 @@
             container.innerHTML = '';
             list.forEach(v => {
                 const card = document.createElement('div');
-                card.className = 'bg-slate-800/60 border border-slate-700 p-4 rounded-lg space-y-3';
+                card.className = 'bg-slate-900/70 border border-slate-800 p-3.5 rounded-2xl space-y-2 shadow-sm';
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="font-bold text-amber-400 text-base">${v.word}</span>
-                                <span class="text-xs text-slate-400 italic font-mono">(${v.pos})</span>
+                            <div class="flex items-center space-x-1.5">
+                                <span class="font-bold text-amber-400 text-sm">${v.word}</span>
+                                <span class="text-[10px] text-slate-500 italic">(${v.pos})</span>
                             </div>
-                            <div class="text-xs text-slate-400 font-mono mt-0.5">
-                                ${v.phonetic} • <span class="text-amber-200/80 font-sans">อ่านว่า: "${v.thai_read}"</span>
+                            <div class="text-[10px] text-slate-400 font-mono">
+                                ${v.phonetic} • <span class="text-amber-200/80 font-sans">"${v.thai_read}"</span>
                             </div>
                         </div>
-                        <button onclick="speakText('${v.word}')" class="p-1.5 rounded-full bg-slate-700 hover:bg-slate-600 text-amber-300 transition" title="ฟังการออกเสียง">
-                            🔊
-                        </button>
+                        <button onclick="speakText('${v.word}')" class="active-scale p-1.5 rounded-full bg-slate-800 text-amber-300">🔊</button>
                     </div>
-                    <p class="text-sm font-medium text-slate-200">${v.meaning}</p>
-                    <div class="bg-slate-900/60 p-2.5 rounded border border-slate-800 text-xs text-slate-300 leading-relaxed">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="text-slate-500 font-semibold">บริบทตัวอย่าง:</span>
-                            <button onclick="speakText('${v.context.replace(/'/g, "\\'")}')" class="text-amber-400 text-[10px] hover:underline">🔊 ฟังประโยค</button>
-                        </div>
+                    <p class="text-xs font-medium text-slate-200">${v.meaning}</p>
+                    <div class="bg-[#0b0f19] p-2.5 rounded-xl border border-slate-800/80 text-[11px] text-slate-400">
                         "${v.context}"
                     </div>
                 `;
@@ -369,9 +310,7 @@
         function filterVocab() {
             const query = document.getElementById('vocab-search').value.toLowerCase();
             const filtered = vocabList.filter(v => 
-                v.word.toLowerCase().includes(query) || 
-                v.meaning.toLowerCase().includes(query) ||
-                v.thai_read.toLowerCase().includes(query)
+                v.word.toLowerCase().includes(query) || v.meaning.toLowerCase().includes(query) || v.thai_read.toLowerCase().includes(query)
             );
             renderVocab(filtered);
         }
@@ -382,23 +321,16 @@
             const text = essayInput.value.trim();
             const count = text ? text.split(/\s+/).length : 0;
             const counterLabel = document.getElementById('word-count');
-            counterLabel.innerText = `จำนวนคำ: ${count} คำ (เป้าหมาย: 80-120 คำ)`;
-            
-            if (count >= 80 && count <= 120) {
-                counterLabel.className = 'text-xs font-mono text-emerald-400 font-semibold';
-            } else if (count > 120) {
-                counterLabel.className = 'text-xs font-mono text-rose-400 font-semibold';
-            } else {
-                counterLabel.className = 'text-xs font-mono text-slate-400';
-            }
+            counterLabel.innerText = `${count} คำ (เป้าหมาย: 80-120)`;
+            counterLabel.className = (count >= 80 && count <= 120) ? 'text-[11px] font-mono text-emerald-400 font-bold' : 'text-[11px] font-mono text-slate-500';
         });
 
         function saveDraft() {
             localStorage.setItem('diplomatic_summary_draft', essayInput.value);
-            alert('บันทึกแบบร่างการสรุปข่าวเรียบร้อยแล้ว!');
+            alert('บันทึกแบบร่างสำเร็จ');
         }
 
-        // Init App
+        // Init
         loadQuestion();
         renderVocab(vocabList);
         if (localStorage.getItem('diplomatic_summary_draft')) {
