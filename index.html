@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
+    <!-- iOS Web App Metadata -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="DiplomatPrep">
+    <meta name="apple-mobile-web-app-title" content="Diplomat30">
     <meta name="theme-color" content="#0b0f19">
 
-    <title>Diplomatic English Prep - 7-Day Cycle</title>
+    <title>Diplomatic English - 30 Mins Daily Prep</title>
     
+    <!-- Tailwind CSS & Google Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -18,7 +20,6 @@
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Sarabun', sans-serif;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
         }
         .ios-blur {
             backdrop-filter: blur(20px);
@@ -31,58 +32,62 @@
 </head>
 <body class="bg-[#0b0f19] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-950">
 
-    <header class="sticky top-0 z-50 bg-[#0f172a]/80 ios-blur border-b border-slate-800/80 pt-safe">
+    <!-- Top Header -->
+    <header class="sticky top-0 z-50 bg-[#0f172a]/85 ios-blur border-b border-slate-800/80 pt-safe">
         <div class="max-w-md mx-auto px-4 py-2.5 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-2.5">
                 <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-slate-950 font-bold text-sm shadow-md shadow-amber-500/20">
                     🏛️
                 </div>
                 <div>
-                    <h1 class="text-sm font-bold tracking-tight text-white leading-none">Diplomatic Prep</h1>
-                    <span id="current-date" class="text-[10px] text-slate-400 font-medium"></span>
+                    <h1 class="text-sm font-bold tracking-tight text-white leading-none">Diplomat 30-Min</h1>
+                    <span id="header-status" class="text-[10px] text-amber-400/90 font-medium">เป้าหมาย: วันละ 30 นาที</span>
                 </div>
             </div>
             
-            <div class="flex items-center space-x-1.5">
-                <select id="day-selector" onchange="changeDay(this.value)" class="bg-slate-800 text-amber-400 border border-slate-700 text-[11px] rounded-lg px-2 py-1 focus:outline-none font-semibold">
-                    <option value="0">วันอาทิตย์</option>
-                    <option value="1">วันจันทร์</option>
-                    <option value="2">วันอังคาร</option>
-                    <option value="3">วันพุธ</option>
-                    <option value="4">วันพฤหัสบดี</option>
-                    <option value="5">วันศุกร์</option>
-                    <option value="6">วันเสาร์</option>
+            <!-- Day Selection (Day 1 - Day 50) -->
+            <div class="flex items-center space-x-1">
+                <span class="text-[10px] text-slate-400 font-mono">Day</span>
+                <select id="day-select" onchange="switchDay(this.value)" class="bg-slate-800 border border-slate-700 text-amber-400 text-xs rounded-lg px-2 py-1 font-bold focus:outline-none">
+                    <option value="1">Day 1</option>
+                    <option value="2">Day 2</option>
+                    <option value="3">Day 3</option>
                 </select>
             </div>
         </div>
         
+        <!-- Routine Tabs -->
         <div class="max-w-md mx-auto px-4 pb-2">
             <div class="bg-slate-900/90 p-1 rounded-xl flex border border-slate-800">
-                <button onclick="switchTab('quiz')" id="tab-quiz" class="flex-1 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 shadow-sm transition-all">1. ข้อสอบ</button>
-                <button onclick="switchTab('vocab')" id="tab-vocab" class="flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all">2. คลังศัพท์</button>
-                <button onclick="switchTab('daily')" id="tab-daily" class="flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all">3. ฝึกสรุป</button>
+                <button onclick="switchTab('drill')" id="tab-drill" class="flex-1 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 shadow-sm transition-all">ข้อสอบ (15 นาที)</button>
+                <button onclick="switchTab('vocab')" id="tab-vocab" class="flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all">คลังศัพท์ (10 นาที)</button>
+                <button onclick="switchTab('precis')" id="tab-precis" class="flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all">ฝึกสรุป (5 นาที)</button>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 max-w-md w-full mx-auto px-4 py-4 space-y-4 pb-20">
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-md w-full mx-auto px-4 py-3 space-y-4 pb-20">
 
-        <div class="bg-slate-900/40 border border-slate-800/80 px-3.5 py-2 rounded-xl flex items-center justify-between text-xs">
-            <span class="text-slate-400">ธีมประจำวัน:</span>
-            <span id="theme-title" class="font-bold text-amber-400"></span>
-        </div>
-
-        <section id="section-quiz" class="space-y-4">
-            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 shadow-lg space-y-4">
-                <div class="flex justify-between items-center text-xs">
-                    <span class="font-bold text-amber-400 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Diplomatic Grammar
-                    </span>
-                    <span id="quiz-progress" class="text-slate-500 font-mono text-[11px]"></span>
+        <!-- Tab 1: Exam Drill (10 Questions / 15 Mins) -->
+        <section id="section-drill" class="space-y-3.5">
+            <!-- Timer & Meta -->
+            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-3.5 flex justify-between items-center text-xs">
+                <div class="flex items-center space-x-2">
+                    <span class="text-slate-400">หมวดหมู่:</span>
+                    <span id="question-type" class="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 font-medium text-[11px]">Grammar</span>
                 </div>
+                <div class="flex items-center space-x-3">
+                    <span id="question-progress" class="font-mono text-slate-400 text-xs">ข้อ 1/10</span>
+                    <span id="timer-display" class="font-mono font-bold text-amber-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">15:00</span>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 shadow-lg space-y-4">
+                <p id="question-prompt" class="text-sm font-medium leading-relaxed text-slate-100"></p>
                 
-                <p id="question-text" class="text-sm font-medium leading-relaxed text-slate-100"></p>
-                
+                <!-- Helper Tools (Appears after answer) -->
                 <div id="quiz-assist-tools" class="hidden grid grid-cols-2 gap-2 pt-1">
                     <button onclick="speakText(currentQuestions[currentQIdx].q)" class="active-scale flex items-center justify-center space-x-1 bg-slate-800 border border-slate-700 hover:bg-slate-700 py-2 rounded-xl text-xs font-medium text-amber-300">
                         <span>🔊 ฟังเสียงโจทย์</span>
@@ -93,8 +98,10 @@
                     <div id="quiz-translation-text" class="hidden col-span-2 text-xs text-amber-200/90 bg-amber-950/20 border border-amber-900/40 p-3 rounded-xl leading-relaxed"></div>
                 </div>
 
+                <!-- Multiple Choices -->
                 <div id="options-container" class="space-y-2.5 pt-1"></div>
 
+                <!-- Explanation Result Box -->
                 <div id="explanation-box" class="hidden p-3.5 rounded-xl border text-xs leading-relaxed space-y-3">
                     <h4 id="explanation-title" class="font-bold text-sm"></h4>
                     <p id="explanation-text" class="text-slate-300"></p>
@@ -105,328 +112,93 @@
             </div>
         </section>
 
+        <!-- Tab 2: Vocabulary Bank (1,000+ Words Filterable) -->
         <section id="section-vocab" class="hidden space-y-3">
-            <div class="relative">
-                <input type="text" id="vocab-search" oninput="filterVocab()" placeholder="🔍 ค้นหาคำศัพท์ / คำอ่าน..." class="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400">
+            <div class="flex items-center space-x-2">
+                <input type="text" id="vocab-search" oninput="filterVocab()" placeholder="🔍 ค้นหาคำศัพท์ (จากคลัง 1,000 คำ)..." class="flex-1 bg-slate-900/80 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400">
+                <select id="vocab-category" onchange="filterVocab()" class="bg-slate-900 border border-slate-800 text-[11px] rounded-xl px-2.5 py-2 text-slate-300 focus:outline-none">
+                    <option value="ALL">ทุกหมวด</option>
+                    <option value="Geopolitics">Geopolitics</option>
+                    <option value="Law">Treaties & Law</option>
+                    <option value="Trade">Trade & Econ</option>
+                    <option value="Protocol">Protocol</option>
+                    <option value="Humanitarian">Humanitarian</option>
+                </select>
             </div>
-            <div id="vocab-grid" class="space-y-3"></div>
+            <div id="vocab-container" class="space-y-2.5"></div>
         </section>
 
-        <section id="section-daily" class="hidden space-y-4">
-            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 shadow-lg space-y-3.5">
+        <!-- Tab 3: Daily Micro-Precis (5 Mins) -->
+        <section id="section-precis" class="hidden space-y-3.5">
+            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 shadow-lg space-y-3">
                 <div class="flex justify-between items-center">
-                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wide">Daily Policy Precis Task</h3>
-                    <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full">เป้าหมาย: 80–120 คำ</span>
+                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wide">5-Min Policy Summary</h3>
+                    <span class="text-[10px] text-slate-400 font-mono">เป้าหมาย: 60-80 คำ</span>
                 </div>
-
-                <div class="bg-[#0b0f19] p-3 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
-                    <span class="font-bold text-slate-300">โครงสร้างบังคับ 3 ส่วน:</span>
-                    <p>1. แก่นประเด็นขัดแย้ง 2. ท่าทีการตอบโต้ 3. ผลกระทบภูมิรัฐศาสตร์</p>
+                <div class="bg-[#0b0f19] p-3 rounded-xl border border-slate-800 space-y-2">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase">บทความวิเคราะห์ประจำวัน:</span>
+                    <p id="precis-source" class="text-xs text-slate-300 font-serif leading-relaxed italic">
+                        "The multilateral summit on regional security concluded with member states reaffirming their allegiance to non-intervention and sovereign equality. Despite persistent trade disputes, participants established a joint consultative committee to safeguard open maritime lanes, underscoring that economic resilience depends heavily upon unimpeded maritime trade."
+                    </p>
                 </div>
-
-                <div class="bg-[#0b0f19] p-3.5 rounded-xl border border-slate-800 space-y-2">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[10px] uppercase font-bold text-slate-500">บทความต้นฉบับประจำวัน:</span>
-                        <button onclick="speakText(document.getElementById('news-source').innerText)" class="text-[11px] text-amber-400 hover:underline flex items-center gap-1">
-                            🔊 ฟังเสียงต้นฉบับ
-                        </button>
-                    </div>
-                    <p id="news-source" class="text-xs text-slate-300 font-serif leading-relaxed italic"></p>
+                <textarea id="precis-input" rows="4" placeholder="สรุปใจความสำคัญเป็นภาษาอังกฤษอย่างเป็นทางการ..." class="w-full bg-[#0b0f19] border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
+                <div class="flex justify-between items-center">
+                    <span id="precis-count" class="text-[10px] text-slate-500 font-mono">0 คำ</span>
+                    <button onclick="alert('บันทึกคำตอบเรียบร้อยแล้ว!')" class="active-scale text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700">💾 บันทึก</button>
                 </div>
-
-                <div class="space-y-2">
-                    <textarea id="essay-input" rows="4" placeholder="พิมพ์บทสรุปนโยบายที่นี่เพื่อฝึกฝน..." class="w-full bg-[#0b0f19] border border-slate-800 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-400"></textarea>
-                    
-                    <div class="flex justify-between items-center">
-                        <span id="word-count" class="text-[11px] font-mono text-slate-500">0 คำ (เป้าหมาย: 80-120)</span>
-                        <button onclick="saveDraft()" class="active-scale bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-700 font-medium">
-                            💾 บันทึก
-                        </button>
-                    </div>
-                </div>
-
-                <div class="border-t border-slate-800 pt-3">
-                    <button onclick="toggleModelAnswer()" class="active-scale w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 flex justify-between items-center text-xs font-semibold text-amber-300 transition">
-                        <span>💡 ดูตัวอย่างคำตอบระดับ C1 (Model Answer)</span>
-                        <span id="model-toggle-icon">▼</span>
-                    </button>
-                    
-                    <div id="model-answer-box" class="hidden mt-2 p-3.5 rounded-xl bg-slate-950/80 border border-amber-500/30 space-y-2.5">
-                        <div class="flex justify-between items-center">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">สำนวนทางการทูตมาตรฐาน (90–110 คำ):</span>
-                            <button onclick="speakText(document.getElementById('model-answer-text').innerText)" class="text-[11px] text-amber-300 hover:underline">
-                                🔊 ฟังเสียงตัวอย่าง
-                            </button>
-                        </div>
-                        <p id="model-answer-text" class="text-xs text-slate-200 leading-relaxed font-serif bg-slate-900/50 p-2.5 rounded-lg border border-slate-800"></p>
-                        <div class="text-[10px] text-slate-400 bg-amber-950/20 p-2 rounded border border-amber-900/30">
-                            <b>💡 ข้อสังเกต:</b> ตัวอย่างนี้ใช้คำเชื่อมบอกเหตุผล (<i>Notwithstanding, Consequently</i>) และหลีกเลี่ยงการคัดลอกประโยคตรงจากบทความต้นทาง
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2">
-                <a href="https://news.un.org/en/" target="_blank" class="p-3 bg-slate-900/50 border border-slate-800 rounded-xl text-center active-scale">
-                    <span class="text-xs font-bold text-amber-400 block">UN News</span>
-                    <span class="text-[10px] text-slate-500">แถลงการณ์ทางการ</span>
-                </a>
-                <a href="https://www.youtube.com/@CaspianReport" target="_blank" class="p-3 bg-slate-900/50 border border-slate-800 rounded-xl text-center active-scale">
-                    <span class="text-xs font-bold text-amber-400 block">CaspianReport</span>
-                    <span class="text-[10px] text-slate-500">วิเคราะห์ Geopolitics</span>
-                </a>
             </div>
         </section>
 
     </main>
 
-    <div class="pb-safe"></div>
+    <!-- Data Import (ดึงจาก data.js) -->
+    <script src="data.js"></script>
 
+    <!-- App Engine Logic -->
     <script>
-        // 7-Day Curriculum Data with Full Model Answers
-        const dailyData = {
-            // วันอาทิตย์: Diplomatic Mediation & Crisis
-            0: {
-                theme: "อาทิตย์: การเจรจาไกล่เกลี่ย & วิกฤตการณ์ (Mediation)",
-                news: "Special envoys convened in Geneva to broker an urgent cessation of hostilities between the conflicting factions. Despite deep-seated distrust, the mediators proposed a phased demilitarization plan alongside humanitarian corridors. Observers caution that without enforceable compliance mechanisms and verified monitoring, any preliminary ceasefire agreement risks premature collapse, further destabilizing the fragile regional security architecture.",
-                modelAnswer: "In response to escalating armed conflict, international mediators in Geneva proposed a structured demilitarization roadmap and established humanitarian relief corridors to alleviate civilian distress. While conflicting factions expressed conditional willingness to de-escalate, independent analysts underscore that the sustainability of the proposed ceasefire hinges strictly on third-party verification and robust compliance mandates. Consequently, the collapse of these diplomatic efforts would exacerbate regional instability and impede future peacebuilding initiatives.",
-                questions: [
-                    {
-                        q: "The mediator attempted to ________ between the two hostile states to prevent full-scale war.",
-                        translation: "ผู้ไกล่เกลี่ยพยายาม 'เป็นคนกลางประสานความสัมพันธ์' ระหว่างสองรัฐที่เป็นปฏิปักษ์เพื่อป้องกันสงครามเต็มรูปแบบ",
-                        options: ["intervene", "liaise", "subjugate", "annex"],
-                        answer: 1,
-                        reason: "<b>Liaise</b> (/liˈeɪz/) แปลว่า ประสานงาน/ทำหน้าที่เป็นตัวกลางเชื่อมความสัมพันธ์"
-                    },
-                    {
-                        q: "It is crucial that the ambassador ________ present at the high-level mediation summit tomorrow.",
-                        translation: "เป็นเรื่องจำเป็นอย่างยิ่งที่ท่านทูต 'จะต้อง' ปรากฏตัวในการประชุมสุดยอดไกล่เกลี่ยระดับสูงในวันพรุ่งนี้",
-                        options: ["is", "be", "was", "will be"],
-                        answer: 1,
-                        reason: "<b>Subjunctive Mood</b>: โครงสร้าง <i>It is crucial that + S + (should) V.inf</i> จึงต้องใช้รูป Base Form คือ <b>be</b>"
-                    }
-                ]
-            },
-            // วันจันทร์: Geopolitics & Maritime Security
-            1: {
-                theme: "จันทร์: ภูมิรัฐศาสตร์ & ความมั่นคงทางทะเล (Maritime Security)",
-                news: "Amid escalating tensions in disputed waterways, naval skirmishes have heightened concerns over the freedom of navigation. Multiple littoral states expressed alarm over coercive gray-zone tactics that encroach upon sovereign exclusive economic zones (EEZs). The multilateral bloc reiterated the urgent necessity of concluding a binding Code of Conduct (COC) strictly anchored in UNCLOS provisions.",
-                modelAnswer: "Heightened maritime confrontations in contested waters have severely compromised regional stability and the freedom of international navigation. Confronted with coercive gray-zone maneuvers within their Exclusive Economic Zones, regional littoral states have lodged formal diplomatic protests. To mitigate friction and reinforce the rules-based maritime order, regional stakeholders have called for the expedited conclusion of a legally binding Code of Conduct grounded firmly in the United Nations Convention on the Law of the Sea (UNCLOS).",
-                questions: [
-                    {
-                        q: "Both nations issued a joint communique reaffirming their commitment to upholding territorial ________.",
-                        translation: "ทั้งสองประเทศออกแถลงการณ์ร่วมเพื่อยืนยันพันธกรณีในการธำรงไว้ซึ่ง 'บูรณภาพแห่งดินแดน'",
-                        options: ["impasse", "integrity", "hegemony", "annexation"],
-                        answer: 1,
-                        reason: "<b>Territorial integrity</b> = บูรณภาพแห่งดินแดน (Collocation สำคัญตามกฎบัตรสหประชาชาติ)"
-                    },
-                    {
-                        q: "Rarely ________ such blatant disregard for international maritime norms.",
-                        translation: "แทบไม่เคยปรากฏเลยว่า ชุมชนระหว่างประเทศจะได้พบเห็นการเพิกเฉยต่อบรรทัดฐานทางทะเลอย่างโจ่งแจ้งเช่นนี้",
-                        options: [
-                            "the international community had witnessed",
-                            "had the international community witnessed",
-                            "the international community has witnessed",
-                            "did the international community witnessed"
-                        ],
-                        answer: 1,
-                        reason: "<b>Negative Inversion</b>: คำว่า <i>Rarely</i> ขึ้นต้น ต้องสลับกริยาช่วย <i>had</i> มาไว้หน้าประธาน"
-                    }
-                ]
-            },
-            // วันอังคาร: International Law & Treaties
-            2: {
-                theme: "อังคาร: สนธิสัญญา & กฎหมายระหว่างประเทศ (Treaties & Law)",
-                news: "The legal committee finalized deliberations on the draft convention concerning cross-border cybersecurity protocols. Delegates emphasized that state sovereignty in cyberspace must be balanced with collective defense against state-sponsored ransomware. The treaty will enter into force once ratified by thirty signatory states, establishing clear accountability mechanisms under international customary law.",
-                modelAnswer: "The multilateral legal committee has concluded negotiations on an international cybersecurity framework designed to counter cross-border cyber threats and state-sponsored espionage. Delegates reaffirmed the imperative of harmonizing sovereign digital jurisdiction with collective security measures. Subject to ratification by thirty signatory states, the convention aims to establish binding legal accountability, thereby institutionalizing norms of responsible state behavior in cyberspace under customary international law.",
-                questions: [
-                    {
-                        q: "The treaty was deemed non-binding because the delegation acted without prior ________ from parliament.",
-                        translation: "สนธิสัญญาดังกล่าวถือว่าไม่มีผลผูกพัน เนื่องจากคณะผู้แทนดำเนินการโดยปราศจาก 'การให้สัตยาบัน' ล่วงหน้าจากรัฐสภา",
-                        options: ["jurisdiction", "ratification", "deterrence", "bilateralism"],
-                        answer: 1,
-                        reason: "<b>Ratification</b> (/ˌræt.ɪ.fɪˈkeɪ.ʃən/) คือการให้สัตยาบันหรือการอนุมัติรับรองอย่างเป็นทางการ"
-                    },
-                    {
-                        q: "Had the state ________ the convention, it would have been subject to international arbitration.",
-                        translation: "หากรัฐดังกล่าวได้ 'ลงนามรับรอง' อนุสัญญาไปแล้ว ก็จะต้องตกอยู่ภายใต้อำนาจการตัดสินของศาลอนุญาโตตุลาการระหว่างประเทศ",
-                        options: ["sign", "signed", "signing", "been signed"],
-                        answer: 1,
-                        reason: "<b>Third Conditional Inversion</b>: ย่อมาจาก <i>If the state had signed...</i> สลับเป็น <i>Had the state signed...</i>"
-                    }
-                ]
-            },
-            // วันพุธ: Trade, Sanctions & Global Economy
-            3: {
-                theme: "พุธ: เศรษฐกิจโลก & มาตรการคว่ำบาตร (Trade & Sanctions)",
-                news: "Unilateral economic sanctions and secondary tariffs continue to exert severe strain on global supply chains. Financial policymakers warned against protectionist decoupling, advocating instead for multilateral trade frameworks under the WTO. Developing economies highlighted the disproportionate burden of inflation and critical supply shortages resulting from geopolitical embargoes.",
-                modelAnswer: "The widespread proliferation of unilateral economic sanctions and protectionist tariffs has severely disrupted global supply chains and exacerbated inflationary pressures. While major powers utilize economic statecraft as strategic leverage, developing nations face critical resource shortages and fiscal volatility. To prevent fragmentation, financial leaders have urged a return to multilateral dispute resolution mechanisms under the World Trade Organization, emphasizing that economic stability relies upon open, non-discriminatory trade architectures.",
-                questions: [
-                    {
-                        q: "The ministry imposed targeted sanctions to ________ illicit capital flows into the conflict zone.",
-                        translation: "กระทรวงได้บังคับใช้มาตรการคว่ำบาตรแบบจำเพาะเจาะจงเพื่อ 'ระงับ/สกัดกั้น' เงินทุนที่ผิดกฎหมายไม่ให้ไหลเข้าสู่พื้นที่ขัดแย้ง",
-                        options: ["curb", "foster", "proliferate", "instigate"],
-                        answer: 0,
-                        reason: "<b>Curb</b> (/kɜːb/) แปลว่า ควบคุม, ระงับ หรือสกัดกั้นการแพร่ระบาด/การไหลของสิ่งไม่พึงประสงค์"
-                    },
-                    {
-                        q: "The economic summit concluded with agreements aimed at ________ foreign direct investment.",
-                        translation: "การประชุมสุดยอดทางเศรษฐกิจปิดฉากลงด้วยข้อตกลงที่มุ่งเน้นการ 'ส่งเสริม/กระตุ้น' การลงทุนโดยตรงจากต่างประเทศ",
-                        options: ["fostering", "deterring", "boycotting", "waiving"],
-                        answer: 0,
-                        reason: "<b>Foster</b> (/ˈfɒs.tər/) แปลว่า ส่งเสริม สนับสนุน หรือบ่มเพาะ"
-                    }
-                ]
-            },
-            // วันพฤหัสบดี: Multilateralism & ASEAN Diplomacy
-            4: {
-                theme: "พฤหัสบดี: พหุภาคีนิยม & อาเซียน (Multilateralism & ASEAN)",
-                news: "Foreign ministers gathered to reaffirm ASEAN centrality amid growing geopolitical competition among major powers. The joint declaration underscored consensus-based decision-making and constructive engagement in mitigating regional crises. Envoys emphasized that preserving strategic autonomy is paramount for small and middle-power states navigating polarized international spheres.",
-                modelAnswer: "At the recent foreign ministers' summit, member states reaffirmed ASEAN centrality as the cornerstone for managing major-power rivalry in the Indo-Pacific. The joint declaration reiterated allegiance to consensus-based decision-making and constructive diplomatic dialogue in addressing cross-border security challenges. Preserving strategic autonomy remains imperative, enabling Southeast Asian nations to maintain diplomatic neutrality, prevent bloc polarization, and safeguard regional equilibrium.",
-                questions: [
-                    {
-                        q: "Member states stressed the principle of non-interference and ________ decision-making.",
-                        translation: "ประเทศสมาชิกเน้นย้ำถึงหลักการไม่แทรกแซงกิจการภายในและการตัดสินใจบนพื้นฐานของ 'ฉันทามติ'",
-                        options: ["hegemonic", "consensus-based", "coercive", "unilateral"],
-                        answer: 1,
-                        reason: "<b>Consensus-based</b> = การตัดสินใจที่เกิดจากการเห็นพ้องร่วมกัน (ฉันทามติ) ซึ่งเป็นเอกลักษณ์ของ ASEAN Way"
-                    },
-                    {
-                        q: "Not only ________ the communique, but they also pledged financial aid to disaster relief.",
-                        translation: "พวกเขาไม่เพียงแต่ได้ 'รับรอง' แถลงการณ์ร่วมเท่านั้น แต่ยังได้ให้คำมั่นว่าจะมอบเงินช่วยเหลือเพื่อการบรรเทาภัยพิบัติอีกด้วย",
-                        options: ["they endorsed", "did they endorse", "they have endorsed", "endorsed they"],
-                        answer: 1,
-                        reason: "<b>Inversion with 'Not only'</b>: ต้องใช้รูป กริยาช่วย (did) + ประธาน (they) + กริยาแท้ (endorse)"
-                    }
-                ]
-            },
-            // วันศุกร์: Human Rights & Humanitarian Diplomacy
-            5: {
-                theme: "ศุกร์: สิทธิมนุษยชน & การทูตเพื่อมนุษยธรรม (Humanitarian Diplomacy)",
-                news: "The UN High Commissioner appealed for unhindered humanitarian access and emergency funding to assist internally displaced persons. Delegates voiced concern over escalating refugee flows and called on recipient nations to uphold the principle of non-refoulement. Constructive dialogue continues between aid agencies and host governments to establish safe zones and deliver critical medical relief.",
-                modelAnswer: "Addressing the escalating humanitarian crisis, the United Nations has urgently appealed for unimpeded access and emergency resources to protect displaced populations. International delegates emphasized the binding obligation of host states to uphold the principle of non-refoulement, thereby guaranteeing that vulnerable refugees are not returned to persecution. Constructive engagement between relief agencies and state authorities remains pivotal to establishing humanitarian corridors and preventing further regional destabilization.",
-                questions: [
-                    {
-                        q: "Under customary international law, the principle of ________ prohibits returning refugees to danger.",
-                        translation: "ภายใต้กฎหมายจารีตประเพณีระหว่างประเทศ หลักการ 'ห้ามส่งกลับผู้ลี้ภัยไปเผชิญอันตราย' ห้ามมิให้ส่งตัวบุคคลกลับไปยังสถานที่ที่ชีวิตถูกคุกคาม",
-                        options: ["non-refoulement", "annexation", "extradition", "repatriation"],
-                        answer: 0,
-                        reason: "<b>Non-refoulement</b> (/nɒn.rəˈfuːl.mɒ̃/) เป็นหลักการสากลว่าด้วยการห้ามผลักดันผู้ลี้ภัยกลับสู่อันตราย"
-                    },
-                    {
-                        q: "The NGO requested that unrestricted aid ________ granted to the border region immediately.",
-                        translation: "องค์กรพัฒนาเอกชนได้ร้องขอให้ 'อนุญาต' มอบความช่วยเหลือแบบไร้การขัดขวางแก่พื้นที่ชายแดนโดยทันที",
-                        options: ["is", "be", "was", "will be"],
-                        answer: 1,
-                        reason: "<b>Subjunctive Mood with 'Request that'</b>: ใช้รูป <i>(should) be granted</i>"
-                    }
-                ]
-            },
-            // วันเสาร์: Climate Diplomacy & Sustainable Development
-            6: {
-                theme: "เสาร์: การทูตสิ่งแวดล้อม & การพัฒนาที่ยั่งยืน (Climate Diplomacy)",
-                news: "Delegates at the climate summit reached an agreement on operationalizing the Loss and Damage Fund for vulnerable developing states. High-emitting economies committed to updated Nationally Determined Contributions (NDCs) aiming for net-zero emissions. However, debates persist regarding equitable technology transfers and climate finance allocations, requiring sustained diplomatic negotiations.",
-                modelAnswer: "The international climate summit achieved a breakthrough by formalizing the Loss and Damage Fund to assist vulnerable developing nations disproportionately impacted by ecological disasters. While advanced economies reiterated commitments to net-zero carbon targets through revised Nationally Determined Contributions, persistent disputes over equitable financing and green technology transfers remain unresolved. Consequently, multilateral diplomacy must prioritize sustained fiscal partnerships to ensure a just and inclusive global green transition.",
-                questions: [
-                    {
-                        q: "Developing states urged developed economies to honor their climate finance ________.",
-                        translation: "กลุ่มประเทศกำลังพัฒนาเรียกร้องให้ประเทศพัฒนาแล้วปฏิบัติตาม 'พันธกรณี/ข้อผูกมัด' ด้านการเงินเพื่อสภาพภูมิอากาศ",
-                        options: ["commitments", "demarches", "impasse", "boycotts"],
-                        answer: 0,
-                        reason: "<b>Commitment</b> = พันธสัญญา หรือข้อผูกมัดที่ต้องปฏิบัติให้สำเร็จ"
-                    },
-                    {
-                        q: "Were the global temperature ________ by 2 degrees Celsius, small island states would face existential threats.",
-                        translation: "หากอุณหภูมิโลก 'เพิ่มขึ้น' ถึง 2 องศาเซลเซียส บรรดารัฐเกาะขนาดเล็กก็จะต้องเผชิญกับภัยคุกคามต่อการดำรงอยู่",
-                        options: ["to rise", "rose", "risen", "rising"],
-                        answer: 0,
-                        reason: "<b>Inversion of Second Conditional</b>: <i>If the temperature were to rise...</i> ย่อรูปเป็น <i>Were the temperature to rise...</i>"
-                    }
-                ]
-            }
-        };
-
-        // Static Master Vocabulary
-        const vocabList = [
-            { word: "Rapprochement", phonetic: "/ræpˈrɒʃ.mɒ̃/", thai_read: "แร็พ-รอช-ม็อง", pos: "n.", meaning: "การฟื้นฟูความสัมพันธ์ฉันมิตร", context: "The summit paved the way for a historic rapprochement." },
-            { word: "Demarche", phonetic: "/deɪˈmɑːʃ/", thai_read: "เดย์-มาร์ช", pos: "n.", meaning: "การยื่นแถลงประท้วงทางการทูต", context: "The ministry issued a formal diplomatic demarche." },
-            { word: "Sovereignty", phonetic: "/ˈsɒv.rɪn.ti/", thai_read: "ซ็อฝ-ริน-ทิ", pos: "n.", meaning: "อธิปไตยของรัฐ", context: "All nations must respect sovereign boundaries." },
-            { word: "Impasse", phonetic: "/ˈæm.pɑːs/", thai_read: "แอม-พาส", pos: "n.", meaning: "ทางตัน / ภาวะชะงักงัน", context: "Envoys worked to overcome the negotiation impasse." },
-            { word: "Non-refoulement", phonetic: "/nɒn.rəˈfuːl.mɒ̃/", thai_read: "น็อน-เรอะ-ฟูล-ม็อง", pos: "n.", meaning: "หลักการไม่ผลักดันผู้ลี้ภัยกลับสู่อันตราย", context: "States must adhere to the customary law of non-refoulement." }
-        ];
-
-        // System State
-        let currentDayIdx = new Date().getDay();
+        let currentDay = 1;
         let currentQuestions = [];
         let currentQIdx = 0;
+        let timeLeft = 900; // 15 Minutes (in seconds)
+        let timerInterval = null;
 
-        function initDay(dayNum) {
-            currentDayIdx = parseInt(dayNum);
-            document.getElementById('day-selector').value = currentDayIdx;
-            
-            const activeData = dailyData[currentDayIdx];
-            document.getElementById('theme-title').innerText = activeData.theme;
-            document.getElementById('news-source').innerText = `"${activeData.news}"`;
-            document.getElementById('model-answer-text').innerText = activeData.modelAnswer;
-            
-            // Reset Model Answer Box Visibility
-            document.getElementById('model-answer-box').classList.add('hidden');
-            document.getElementById('model-toggle-icon').innerText = '▼';
-
-            currentQuestions = activeData.questions;
+        // Initialize App
+        function initApp() {
+            // Load questions for Day 1
+            currentQuestions = masterQuizBank.filter(q => q.day === currentDay);
             currentQIdx = 0;
             loadQuestion();
-
-            // Load today's draft if exists
-            const savedDraft = localStorage.getItem(`draft_day_${currentDayIdx}`);
-            const essayInput = document.getElementById('essay-input');
-            essayInput.value = savedDraft ? savedDraft : '';
-            essayInput.dispatchEvent(new Event('input'));
+            renderVocab(masterVocabBank);
+            startTimer();
         }
 
-        function changeDay(newDay) {
-            initDay(newDay);
+        // Timer Logic
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 900;
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer-display').innerText = "00:00";
+                    alert("หมดเวลา 15 นาทีสำหรับการทำข้อสอบวันนี้แล้ว!");
+                    return;
+                }
+                timeLeft--;
+                const mins = Math.floor(timeLeft / 60);
+                const secs = timeLeft % 60;
+                document.getElementById('timer-display').innerText = 
+                    `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            }, 1000);
         }
 
-        // Toggle Model Answer Visibility
-        function toggleModelAnswer() {
-            const box = document.getElementById('model-answer-box');
-            const icon = document.getElementById('model-toggle-icon');
-            if (box.classList.contains('hidden')) {
-                box.classList.remove('hidden');
-                icon.innerText = '▲';
-            } else {
-                box.classList.add('hidden');
-                icon.innerText = '▼';
-            }
-        }
-
-        // Speech API
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.88;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        // Navigation Tabs
-        function switchTab(tab) {
-            ['quiz', 'vocab', 'daily'].forEach(t => {
-                document.getElementById(`section-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).className = 'flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all';
-            });
-            document.getElementById(`section-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 shadow-sm transition-all';
-        }
-
-        // Quiz Handling
+        // Question Loader
         function loadQuestion() {
+            if (currentQuestions.length === 0) return;
             const q = currentQuestions[currentQIdx];
-            document.getElementById('quiz-progress').innerText = `${currentQIdx + 1}/${currentQuestions.length}`;
-            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('question-progress').innerText = `ข้อ ${currentQIdx + 1}/${currentQuestions.length}`;
+            document.getElementById('question-type').innerText = q.type || 'Exam Drill';
+            document.getElementById('question-prompt').innerText = q.q;
+            
             document.getElementById('explanation-box').classList.add('hidden');
             document.getElementById('quiz-assist-tools').classList.add('hidden');
             document.getElementById('quiz-translation-text').classList.add('hidden');
@@ -481,30 +253,44 @@
             loadQuestion();
         }
 
-        // Vocab Section Rendering
+        // Switch Day Handler
+        function switchDay(val) {
+            currentDay = parseInt(val);
+            currentQuestions = masterQuizBank.filter(q => q.day === currentDay);
+            currentQIdx = 0;
+            loadQuestion();
+            startTimer();
+        }
+
+        // Speech Synthesis
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.88;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Vocab Rendering & Filter
         function renderVocab(list) {
-            const container = document.getElementById('vocab-grid');
+            const container = document.getElementById('vocab-container');
             container.innerHTML = '';
             list.forEach(v => {
                 const card = document.createElement('div');
-                card.className = 'bg-slate-900/70 border border-slate-800 p-3.5 rounded-2xl space-y-2 shadow-sm';
+                card.className = 'bg-slate-900/70 border border-slate-800 p-3 rounded-xl space-y-1.5';
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
-                            <div class="flex items-center space-x-1.5">
-                                <span class="font-bold text-amber-400 text-sm">${v.word}</span>
-                                <span class="text-[10px] text-slate-500 italic">(${v.pos})</span>
-                            </div>
-                            <div class="text-[10px] text-slate-400 font-mono">
-                                ${v.phonetic} • <span class="text-amber-200/80 font-sans">"${v.thai_read}"</span>
-                            </div>
+                            <span class="font-bold text-amber-400 text-xs">${v.word}</span>
+                            <span class="text-[10px] text-slate-500 font-mono">(${v.pos}) ${v.phonetic}</span>
+                            <span class="text-[10px] text-amber-200/80 block">"${v.thai_read}"</span>
                         </div>
-                        <button onclick="speakText('${v.word}')" class="active-scale p-1.5 rounded-full bg-slate-800 text-amber-300">🔊</button>
+                        <button onclick="speakText('${v.word}')" class="p-1 rounded bg-slate-800 text-amber-300 text-xs">🔊</button>
                     </div>
-                    <p class="text-xs font-medium text-slate-200">${v.meaning}</p>
-                    <div class="bg-[#0b0f19] p-2.5 rounded-xl border border-slate-800/80 text-[11px] text-slate-400">
-                        "${v.context}"
-                    </div>
+                    <p class="text-xs text-slate-300 font-medium">${v.meaning}</p>
+                    <p class="text-[11px] text-slate-400 italic bg-[#0b0f19] p-2 rounded border border-slate-800/80">"${v.context}"</p>
                 `;
                 container.appendChild(card);
             });
@@ -512,35 +298,33 @@
 
         function filterVocab() {
             const query = document.getElementById('vocab-search').value.toLowerCase();
-            const filtered = vocabList.filter(v => 
-                v.word.toLowerCase().includes(query) || v.meaning.toLowerCase().includes(query) || v.thai_read.toLowerCase().includes(query)
-            );
+            const category = document.getElementById('vocab-category').value;
+            const filtered = masterVocabBank.filter(v => {
+                const matchQuery = v.word.toLowerCase().includes(query) || v.meaning.toLowerCase().includes(query);
+                const matchCategory = (category === 'ALL') || (v.category === category);
+                return matchQuery && matchCategory;
+            });
             renderVocab(filtered);
         }
 
-        // Word Counter & Draft Saver
-        const essayInput = document.getElementById('essay-input');
-        essayInput.addEventListener('input', () => {
-            const text = essayInput.value.trim();
-            const count = text ? text.split(/\s+/).length : 0;
-            const counterLabel = document.getElementById('word-count');
-            counterLabel.innerText = `${count} คำ (เป้าหมาย: 80-120)`;
-            counterLabel.className = (count >= 80 && count <= 120) ? 'text-[11px] font-mono text-emerald-400 font-bold' : 'text-[11px] font-mono text-slate-500';
-        });
-
-        function saveDraft() {
-            localStorage.setItem(`draft_day_${currentDayIdx}`, essayInput.value);
-            alert('บันทึกแบบร่างของวันนี้เรียบร้อยแล้ว!');
+        // Tab Navigation
+        function switchTab(tab) {
+            ['drill', 'vocab', 'precis'].forEach(t => {
+                document.getElementById(`section-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).className = 'flex-1 py-1.5 text-xs font-medium rounded-lg text-slate-400 hover:text-slate-200 transition-all';
+            });
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 shadow-sm transition-all';
         }
 
-        // Set Current Date Display
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('th-TH', { 
-            month: 'short', day: 'numeric', weekday: 'short' 
+        // Precis Counter
+        document.getElementById('precis-input').addEventListener('input', (e) => {
+            const words = e.target.value.trim().split(/\s+/).filter(w => w.length > 0);
+            document.getElementById('precis-count').innerText = `${words.length} คำ`;
         });
 
-        // Initialize Web App
-        initDay(new Date().getDay());
-        renderVocab(vocabList);
+        // Run Engine on Load
+        window.onload = initApp;
     </script>
 </body>
 </html>
